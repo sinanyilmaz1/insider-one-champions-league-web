@@ -29,26 +29,47 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## Available Scripts
 
-```sh
-npm run dev
-```
+### Development
 
-### Type-Check, Compile and Minify for Production
+| Command           | Description                                               |
+| ----------------- | --------------------------------------------------------- |
+| `npm run dev`     | Start Vite dev server with hot-reload at `localhost:5173` |
+| `npm run build`   | Type-check and produce a production build in `dist/`      |
+| `npm run preview` | Preview the production build locally                      |
 
-```sh
-npm run build
-```
+### Testing
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+| Command                | Description                                                   |
+| ---------------------- | ------------------------------------------------------------- |
+| `npm run test:unit`    | Run Vitest in interactive watch mode (use during development) |
+| `npm run test:unit:ci` | Run Vitest once and exit (used by CI)                         |
 
-```sh
-npm run test:unit
-```
+### Type Checking
 
-### Lint with [ESLint](https://eslint.org/)
+| Command              | Description                                                    |
+| -------------------- | -------------------------------------------------------------- |
+| `npm run type-check` | Run `vue-tsc` to type-check the project without emitting files |
 
-```sh
-npm run lint
-```
+### Linting & Formatting
+
+| Command                | Description                                             |
+| ---------------------- | ------------------------------------------------------- |
+| `npm run lint`         | Run all linters with auto-fix (Oxlint then ESLint)      |
+| `npm run lint:check`   | Run all linters in check-only mode (used by CI)         |
+| `npm run format`       | Format `src/` with Prettier (writes changes)            |
+| `npm run format:check` | Check if `src/` is formatted; fails if not (used by CI) |
+
+### Git Hooks
+
+Hooks are managed by [Husky](https://typicode.github.io/husky/) and install automatically via the `prepare` script after `npm install`.
+
+| Hook         | What it runs                                                                                                            |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| `pre-commit` | [lint-staged](https://github.com/lint-staged/lint-staged) — ESLint + Prettier on staged files                           |
+| `commit-msg` | [commitlint](https://commitlint.js.org/) — enforces [Conventional Commits](https://www.conventionalcommits.org/) format |
+
+### Allowed Commit Types
+
+`feat` · `fix` · `docs` · `style` · `refactor` · `test` · `chore` · `ci` · `build`
