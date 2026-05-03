@@ -1,7 +1,10 @@
 export interface Team {
   id: number
   name: string
-  strength: number
+  attack: number
+  defense: number
+  midfield: number
+  homeAdvantage: number
 }
 
 export interface MatchResult {
