@@ -37,6 +37,17 @@ describe('client error interceptor', () => {
     } satisfies Partial<ApiError>)
   })
 
+  it('flags 429 rate-limit with friendly message and isRateLimited', async () => {
+    mock.onGet('/teams').reply(429, { message: 'Too Many Attempts.' })
+
+    await expect(client.get('/teams')).rejects.toMatchObject({
+      status: 429,
+      isRateLimited: true,
+      isConflict: false,
+      message: 'Too many requests. Please slow down and try again in a moment.',
+    } satisfies Partial<ApiError>)
+  })
+
   it('flags 409 conflict via isConflict', async () => {
     mock.onPost('/simulation/play-week').reply(409, {
       message: 'All weeks have been played. Reset to play again.',

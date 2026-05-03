@@ -5,6 +5,7 @@ export interface ApiError {
   message: string
   validationErrors?: Record<string, string[]>
   isConflict: boolean
+  isRateLimited: boolean
 }
 
 const client = axios.create({
@@ -23,15 +24,21 @@ client.interceptors.response.use(
         status: null,
         message: 'Network error',
         isConflict: false,
+        isRateLimited: false,
       }
       return Promise.reject(apiError)
     }
     const { status, data } = error.response
+    const isRateLimited = status === 429
     const apiError: ApiError = {
       status,
-      message: data?.message ?? 'Request failed',
+      // Override the backend's "Too Many Attempts." default with something user-friendly.
+      message: isRateLimited
+        ? 'Too many requests. Please slow down and try again in a moment.'
+        : (data?.message ?? 'Request failed'),
       validationErrors: data?.errors,
       isConflict: status === 409,
+      isRateLimited,
     }
     return Promise.reject(apiError)
   },
