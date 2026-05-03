@@ -22,6 +22,21 @@ export const useFixturesStore = defineStore('fixtures', () => {
   const loading = ref(false)
   const error = ref<ApiError | null>(null)
 
+  async function fetch() {
+    loading.value = true
+    error.value = null
+    try {
+      weeks.value = await api.getFixtures()
+    } catch (e) {
+      const err = e as ApiError
+      error.value = err
+      showToast(err.message)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   // Documented cross-store exception: generate() is the bootstrapping mutation
   // that puts the simulation in its initial state, so it splats the response
   // into simulationStore in addition to populating its own weeks.
@@ -42,5 +57,5 @@ export const useFixturesStore = defineStore('fixtures', () => {
     }
   }
 
-  return { weeks, loading, error, generate }
+  return { weeks, loading, error, fetch, generate }
 })
