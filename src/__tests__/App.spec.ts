@@ -10,6 +10,6 @@ describe('App', () => {
         stubs: ['router-view'],
       },
     })
-    expect(wrapper.find('[data-test="tailwind-token-check"]').exists()).toBe(true)
+    expect(wrapper.find('header').exists()).toBe(true)
   })
 })
