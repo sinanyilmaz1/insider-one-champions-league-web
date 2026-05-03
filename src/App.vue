@@ -1,11 +1,6 @@
 <script setup lang="ts"></script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div class="bg-brand h-2 w-full" data-test="tailwind-token-check"></div>
+  <router-view />
 </template>
-
-<style scoped></style>
